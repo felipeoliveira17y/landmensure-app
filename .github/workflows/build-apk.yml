@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Capacitor Android
         run: |
-          npx cap sync android
+          npx @capacitor/cli sync android
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
