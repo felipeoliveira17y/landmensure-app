@@ -40,7 +40,8 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: var(--heading-color);
 }
 
@@ -53,6 +54,206 @@ h1, h2 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: background-color 0.3s, box-shadow 0.3s;
     position: relative;
+}
+
+/* =========================================
+   SPLASH SCREEN & NOVO LOADER (Uiverse - Valeron-T)
+   ========================================= */
+.splash-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #090d16;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    overflow: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+[data-theme="dark"] .splash-container {
+    background: #05070a;
+}
+
+.splash-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.loader {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background: #212121;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 7px seagreen;
+    border: 1px solid seagreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.loader::before {
+    content: "";
+    position: absolute;
+    inset: 20px;
+    background: transparent;
+    border: 1px solid seagreen;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 5px seagreen;
+}
+
+.loader::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid seagreen;
+    box-shadow: inset 0px 0px 3px seagreen;
+}
+
+.loader span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transform-origin: top left;
+    animation: radar81 2s linear infinite;
+    box-shadow: -25px -75px 30px -50px seagreen;
+    border-top: 2px solid #2e8b57;
+}
+
+.loader span::before {
+    display: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    background: seagreen;
+    transform-origin: top left;
+    transform: rotate(-90deg);
+    filter: blur(15px) drop-shadow(10px 0px 10px seagreen);
+}
+
+@keyframes radar81 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#dot-1 {
+    --dot-start-top: 100px;
+    --dot-start-left: 140px;
+    --dot-end-top: 130px;
+    --dot-end-left: 20px;
+    --delay: 0s;
+}
+
+#dot-2 {
+    --dot-start-top: 100px;
+    --dot-start-left: 0px;
+    --dot-end-top: -3px;
+    --dot-end-left: 90px;
+    --delay: 0s;
+}
+
+#dot-3 {
+    --dot-start-top: 100px;
+    --dot-start-left: 105px;
+    --dot-end-top: 18px;
+    --dot-end-left: 18px;
+    --delay: 0s;
+}
+
+#dot-4 {
+    --dot-start-top: 110px;
+    --dot-start-left: 150px;
+    --dot-end-top: 140px;
+    --dot-end-left: 30px;
+    --delay: 0s;
+}
+
+#dot-5 {
+    --dot-start-top: -5px;
+    --dot-start-left: 85px;
+    --dot-end-top: 125px;
+    --dot-end-left: 120px;
+    --delay: 4s;
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    top: var(--dot-start-top);
+    left: var(--dot-start-left);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255);
+    box-shadow: inset 0px 0px 10px 2px rgba(0, 255, 182, 0.5),
+        0px 0px 10px 2px rgba(0, 255, 135, 0.3);
+    animation: fly 32s linear infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes fly {
+    0% {
+        top: var(--dot-start-top);
+        left: var(--dot-start-left);
+    }
+    100% {
+        top: var(--dot-end-top);
+        left: var(--dot-end-left);
+    }
+    5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: inset 0 0 10px 2px rgba(0, 255, 182, 0.5),
+            0 0 15px 2px rgba(0, 255, 135, 1);
+    }
+    0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: inset 0 0 10px 2px rgba(0, 255, 182, 0.5),
+            0 0 5px 2px rgba(0, 255, 135, 0.3);
+    }
+}
+
+.splash-status {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: #4ade80;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.splash-hidden {
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Posicionamento do botão animado no canto superior direito */
@@ -105,11 +306,11 @@ h1, h2 {
     box-shadow: inset 8px -4px 0px 0px #fff;
 }
 
-.switch input:checked + .slider {
+.switch input:checked+.slider {
     background-color: #00a6ff;
 }
 
-.switch input:checked + .slider:before {
+.switch input:checked+.slider:before {
     transform: translateX(1.8em);
     box-shadow: inset 15px -4px 0px 15px #ffcf48;
 }
@@ -138,7 +339,7 @@ h1, h2 {
     top: 0.9em;
 }
 
-.switch input:checked ~ .slider .star {
+.switch input:checked~.slider .star {
     opacity: 0;
 }
 
@@ -151,7 +352,7 @@ h1, h2 {
     transition: all 0.4s;
 }
 
-.switch input:checked ~ .slider .cloud {
+.switch input:checked~.slider .cloud {
     opacity: 1;
 }
 
@@ -357,14 +558,26 @@ h1, h2 {
     display: block;
 }
 
-.wrapper {
-    display: inline-flex;
-    list-style: none;
-    height: 120px;
+/* RODAPÉ E ÍCONES CENTRALIZADOS */
+.site-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    padding-top: 40px;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.site-footer .wrapper {
+    display: flex;
+    list-style: none;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
     font-family: "Poppins", sans-serif;
     justify-content: center;
+    gap: 15px;
 }
 
 .wrapper .icon {
@@ -428,25 +641,26 @@ h1, h2 {
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
 
-.wrapper .facebook:hover,
-.wrapper .facebook:hover .tooltip,
-.wrapper .facebook:hover .tooltip::before {
-    background: #1877f2;
-    color: #fff;
-}
-
-.wrapper .twitter:hover,
-.wrapper .twitter:hover .tooltip,
-.wrapper .twitter:hover .tooltip::before {
-    background: #1da1f2;
-    color: #fff;
-}
-
 .wrapper .instagram:hover,
 .wrapper .instagram:hover .tooltip,
 .wrapper .instagram:hover .tooltip::before {
     background: #e4405f;
     color: #fff;
+}
+
+/* Cor e comportamento do ícone do WhatsApp */
+.site-footer .icon.whatsapp:hover {
+    background-color: #25D366;
+    color: #fff;
+}
+
+.site-footer .icon.whatsapp .tooltip {
+    background-color: #25D366;
+    color: #fff;
+}
+
+.site-footer .icon.whatsapp .tooltip::after {
+    border-top-color: #25D366;
 }
 
 @media print {
@@ -455,8 +669,8 @@ h1, h2 {
         margin: 20mm;
     }
 
-    /* Reseta completamente o fundo e o corpo para a impressão */
-    body, html {
+    body,
+    html {
         background: #fff !important;
         color: #000 !important;
         margin: 0 !important;
@@ -466,7 +680,6 @@ h1, h2 {
         overflow: visible !important;
     }
 
-    /* O container principal perde margens visuais e sombras, virando a folha */
     .container {
         background: #fff !important;
         box-shadow: none !important;
@@ -477,20 +690,18 @@ h1, h2 {
         border: none !important;
     }
 
-    /* Oculta rigorosamente tudo o que não faz parte do documento oficial de impressão */
     .theme-switch-wrapper,
     .form-grid,
     .actions,
     #map,
     h1,
-    .container > p:first-of-type,
+    .container>p:first-of-type,
     h2:not(#memorialOutput h2),
     .site-header,
     .site-footer {
         display: none !important;
     }
 
-    /* Força a caixa do memorial a assumir o fluxo normal de impressão A4 */
     .output-section,
     #memorialOutput {
         display: block !important;
@@ -511,7 +722,6 @@ h1, h2 {
         white-space: pre-wrap !important;
     }
 
-    /* Bloco de assinaturas fixo ao final do texto */
     .print-signatures {
         display: flex !important;
         justify-content: space-between !important;
@@ -533,7 +743,6 @@ h1, h2 {
         margin-bottom: 5px !important;
     }
 
-    /* Logo institucional ao final da folha */
     .print-logo-container {
         display: flex !important;
         justify-content: center !important;
@@ -547,19 +756,4 @@ h1, h2 {
         width: auto !important;
         display: block !important;
     }
-}
-
-/* Cor e comportamento do ícone do WhatsApp */
-.site-footer .icon.whatsapp:hover {
-    background-color: #25D366; /* Verde oficial do WhatsApp */
-    color: #fff;
-}
-
-.site-footer .icon.whatsapp .tooltip {
-    background-color: #25D366;
-    color: #fff;
-}
-
-.site-footer .icon.whatsapp .tooltip::after {
-    border-top-color: #25D366;
 }
