@@ -1,0 +1,20 @@
+{
+  "name": "Landmensure",
+  "short_name": "Landmensure",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#25D366",
+  "icons": [
+    {
+      "src": "impressão.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "impressão.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

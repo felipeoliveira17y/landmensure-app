@@ -1,0 +1,565 @@
+/* VARIÁVEIS DE CORES: MODO CLARO (Padrão) */
+:root {
+    --bg-body: #f4f4f9;
+    --bg-container: #fff;
+    --text-color: #333;
+    --heading-color: #0056b3;
+    --input-bg: #fff;
+    --input-border: #cbd5e1;
+    --input-text: #333;
+    --output-bg: #fafafa;
+    --output-border: #ddd;
+    --map-border: #ccc;
+    --footer-icon-bg: #fff;
+    --footer-icon-color: #333;
+    --footer-shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-body: #121212;
+    --bg-container: #1e1e1e;
+    --text-color: #e0e0e0;
+    --heading-color: #4da3ff;
+    --input-bg: #2d2d2d;
+    --input-border: #444;
+    --input-text: #fff;
+    --output-bg: #252525;
+    --output-border: #383838;
+    --map-border: #444;
+    --footer-icon-bg: #2d2d2d;
+    --footer-icon-color: #e0e0e0;
+    --footer-shadow: rgba(0, 0, 0, 0.4);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2 {
+    color: var(--heading-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--bg-container);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+/* Posicionamento do botão animado no canto superior direito */
+.theme-switch-wrapper {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+/* CSS DO BOTÃO ANIMADO DE TEMA (Uiverse.io by JustCode14) */
+.switch {
+    font-size: 14px;
+    position: relative;
+    display: inline-block;
+    width: 4em;
+    height: 2.2em;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #2a2a2a;
+    transition: 0.4s;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.2em;
+    width: 1.2em;
+    border-radius: 20px;
+    left: 0.5em;
+    bottom: 0.5em;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.81, -0.04, 0.38, 1.5);
+    box-shadow: inset 8px -4px 0px 0px #fff;
+}
+
+.switch input:checked + .slider {
+    background-color: #00a6ff;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(1.8em);
+    box-shadow: inset 15px -4px 0px 15px #ffcf48;
+}
+
+.star {
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    width: 5px;
+    transition: all 0.4s;
+    height: 5px;
+}
+
+.star_1 {
+    left: 2.5em;
+    top: 0.5em;
+}
+
+.star_2 {
+    left: 2.2em;
+    top: 1.2em;
+}
+
+.star_3 {
+    left: 3em;
+    top: 0.9em;
+}
+
+.switch input:checked ~ .slider .star {
+    opacity: 0;
+}
+
+.cloud {
+    width: 3.5em;
+    position: absolute;
+    bottom: -1.4em;
+    left: -1.1em;
+    opacity: 0;
+    transition: all 0.4s;
+}
+
+.switch input:checked ~ .slider .cloud {
+    opacity: 1;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    font-size: 0.95rem;
+}
+
+/* ÁREA DE AÇÕES E BOTÕES */
+.actions {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ESTILO DO BOTÃO ADD FILE */
+.btn-file-upload {
+    border: none;
+    display: flex;
+    padding: 0.75rem 1.5rem;
+    background-color: #488aec;
+    color: #ffffff;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    user-select: none;
+    gap: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(72, 138, 236, 0.31), 0 2px 4px -1px rgba(72, 138, 236, 0.17);
+    transition: all 0.4s ease;
+}
+
+.btn-file-upload:hover {
+    box-shadow: 0 10px 15px -3px rgba(72, 138, 236, 0.49), 0 4px 6px -2px rgba(72, 138, 236, 0.17);
+    filter: brightness(1.1);
+}
+
+.btn-file-upload:active {
+    opacity: 0.85;
+    box-shadow: none;
+}
+
+.btn-file-upload svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* ESTILO DOS DEMAIS BOTÕES */
+.btn {
+    --color: #00A97F;
+    --color2: #ffffff;
+    padding: 0.8em 1.5em;
+    background-color: transparent;
+    border-radius: 6px;
+    border: .3px solid var(--color);
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    text-transform: uppercase;
+    color: var(--color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.btn::after,
+.btn::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: skew(90deg) translate(-50%, -50%);
+    position: absolute;
+    inset: 50%;
+    left: 25%;
+    z-index: -1;
+    transition: .5s ease-out;
+    background-color: var(--color);
+}
+
+.btn::before {
+    top: -50%;
+    left: -25%;
+    transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::before {
+    transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::after {
+    transform: skew(45deg) translate(-50%, -50%);
+}
+
+.btn:hover {
+    color: var(--color2);
+}
+
+.btn:active {
+    filter: brightness(.7);
+    transform: scale(.98);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    filter: grayscale(1);
+    transform: none !important;
+    color: #888 !important;
+    border-color: #666 !important;
+}
+
+.btn:disabled::before,
+.btn:disabled::after {
+    display: none;
+}
+
+.btn-success {
+    --color: #059669;
+}
+
+.btn-info {
+    --color: #0284c7;
+}
+
+.btn-primary {
+    --color: #8b5cf6;
+}
+
+#map {
+    height: 420px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid var(--map-border);
+}
+
+.output-section {
+    background: var(--output-bg);
+    padding: 20px;
+    border: 1px solid var(--output-border);
+    border-radius: 8px;
+    white-space: pre-wrap;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 13pt;
+    line-height: 1.6;
+    max-height: 400px;
+    overflow-y: auto;
+    color: var(--text-color);
+}
+
+.print-signatures {
+    display: none;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.company-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+.wrapper {
+    display: inline-flex;
+    list-style: none;
+    height: 120px;
+    width: 100%;
+    padding-top: 40px;
+    font-family: "Poppins", sans-serif;
+    justify-content: center;
+}
+
+.wrapper .icon {
+    position: relative;
+    background: var(--footer-icon-bg);
+    color: var(--footer-icon-color);
+    border-radius: 50%;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px var(--footer-shadow);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon svg {
+    fill: var(--footer-icon-color);
+    transition: fill 0.3s;
+}
+
+.wrapper .tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #fff;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+    background: #1877f2;
+    color: #fff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+    background: #1da1f2;
+    color: #fff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+    background: #e4405f;
+    color: #fff;
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 20mm;
+    }
+
+    /* Reseta completamente o fundo e o corpo para a impressão */
+    body, html {
+        background: #fff !important;
+        color: #000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* O container principal perde margens visuais e sombras, virando a folha */
+    .container {
+        background: #fff !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+    }
+
+    /* Oculta rigorosamente tudo o que não faz parte do documento oficial de impressão */
+    .theme-switch-wrapper,
+    .form-grid,
+    .actions,
+    #map,
+    h1,
+    .container > p:first-of-type,
+    h2:not(#memorialOutput h2),
+    .site-header,
+    .site-footer {
+        display: none !important;
+    }
+
+    /* Força a caixa do memorial a assumir o fluxo normal de impressão A4 */
+    .output-section,
+    #memorialOutput {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-family: 'Times New Roman', Times, serif !important;
+        font-size: 12pt !important;
+        line-height: 1.6 !important;
+        text-align: justify !important;
+        color: #000 !important;
+        white-space: pre-wrap !important;
+    }
+
+    /* Bloco de assinaturas fixo ao final do texto */
+    .print-signatures {
+        display: flex !important;
+        justify-content: space-between !important;
+        margin-top: 50px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .signature-box {
+        width: 45% !important;
+        text-align: center !important;
+        font-family: 'Times New Roman', Times, serif !important;
+        font-size: 11pt !important;
+        color: #000 !important;
+    }
+
+    .signature-line {
+        border-top: 1px solid #000 !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* Logo institucional ao final da folha */
+    .print-logo-container {
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 35px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .print-logo {
+        max-height: 79px !important;
+        width: auto !important;
+        display: block !important;
+    }
+}
+
+/* Cor e comportamento do ícone do WhatsApp */
+.site-footer .icon.whatsapp:hover {
+    background-color: #25D366; /* Verde oficial do WhatsApp */
+    color: #fff;
+}
+
+.site-footer .icon.whatsapp .tooltip {
+    background-color: #25D366;
+    color: #fff;
+}
+
+.site-footer .icon.whatsapp .tooltip::after {
+    border-top-color: #25D366;
+}

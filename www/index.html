@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landmensure</title>
+    <!-- Correção do ícone da aba -->
+     <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <!-- Leaflet CSS e Estilos -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Botão Animado de Tema -->
+        <div class="theme-switch-wrapper">
+            <label class="switch">
+                <input id="themeCheckbox" type="checkbox" onchange="toggleTheme()" />
+                <span class="slider">
+                    <div class="star star_1"></div>
+                    <div class="star star_2"></div>
+                    <div class="star star_3"></div>
+                    <svg viewBox="0 0 16 16" class="cloud_1 cloud">
+                        <path transform="matrix(.77976 0 0 .78395-299.99-418.63)" fill="#fff"
+                            d="m391.84 540.91c-.421-.329-.949-.524-1.523-.524-1.351 0-2.451 1.084-2.485 2.435-1.395.526-2.388 1.88-2.388 3.466 0 1.874 1.385 3.423 3.182 3.667v.034h12.73v-.006c1.775-.104 3.182-1.584 3.182-3.395 0-1.747-1.309-3.186-2.994-3.379.007-.106.011-.214.011-.322 0-2.707-2.271-4.901-5.072-4.901-2.073 0-3.856 1.202-4.643 2.925">
+                        </path>
+                    </svg>
+                </span>
+            </label>
+        </div>
+
+        <h1>Calculadora de Área e Memorial Descritivo</h1>
+        <p>Importe o arquivo KML da propriedade e preencha os dados abaixo:</p>
+
+        <!-- Dados do Imóvel -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Propriedade:</label>
+                <input type="text" id="propriedade" placeholder="Ex: Fazenda Boa Esperança">
+            </div>
+            
+            <div class="form-group">
+                <label>Proprietário:</label>
+                <input type="text" id="proprietario" placeholder="Ex: João da Silva">
+            </div>
+            <div class="form-group">
+                <label>Endereço:</label>
+                <input type="text" id="endereco" placeholder="Ex: Zona Rural">
+            </div>
+            <div class="form-group">
+                <label>Matrícula:</label>
+                <input type="text" id="matricula" placeholder="Ex: 1234">
+            </div>
+            <div class="form-group">
+                <label>Comarca:</label>
+                <input type="text" id="comarca" placeholder="Ex: Porteiras - CE">
+            </div>
+            <div class="form-group">
+                <label>Profissional:</label>
+                <input type="text" id="profissional" placeholder="Ex: Engenheiro/Técnico">
+            </div>
+            <div class="form-group">
+                <label>CREA:</label>
+                <input type="text" id="crea" placeholder="Ex: CREA 000000">
+            </div>
+        </div>
+
+        <!-- Ações / Botões Modernos -->
+        <div class="actions">
+            <!-- Input File Oculto acionado pelo botão personalizado -->
+            <input type="file" id="fileInput" accept=".kml" style="display: none;" onchange="tratarArquivoKML(this)">
+
+            <!-- Botão Adicionar KML -->
+            <button class="btn-file-upload" onclick="document.getElementById('fileInput').click()">
+                <svg aria-hidden="true" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-width="2" stroke="#ffffff"
+                        d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                        stroke-linejoin="round" stroke-linecap="round"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#ffffff"
+                        d="M17 15V18M17 21V18M17 18H14M17 18H20"></path>
+                </svg>
+                Adicionar KML
+            </button>
+
+            <!-- Botão de Gerar Memorial -->
+            <button id="btnGerar" class="btn btn-success" onclick="processarKML()" disabled>
+                Gerar Memorial
+            </button>
+
+            <!-- Botão de Imprimir Croqui -->
+            <button class="btn btn-info" onclick="imprimirCroqui()">
+                Imprimir Croqui
+            </button>
+
+            <!-- Botão de Imprimir Memorial Oficial -->
+            <button id="btnImprMemorial" class="btn btn-primary" onclick="imprimirMemorial()" disabled>
+                Imprimir Memorial
+            </button>
+        </div>
+
+        <!-- Mapa -->
+        <div id="map"></div>
+
+        <!-- Resultado do Memorial -->
+        <h2>Memorial Descritivo Gerado</h2>
+        <div id="memorialOutput" class="output-section">Aguardando o carregamento do arquivo KML...</div>
+
+        <!-- Bloco de Assinaturas para Impressão -->
+        <div class="print-signatures">
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <span>Proprietário(a)</span>
+            </div>
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <span>Profissional Responsável / CREA</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- O bloco abaixo com a classe .print-logo-container foi removido daqui -->
+
+    <footer class="site-footer">
+        <ul class="wrapper">
+            <li class="icon whatsapp">
+                <a href="https://wa.me/+558881197489" target="_blank"
+                    style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                    <span class="tooltip">WhatsApp</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" fill="currentColor" viewBox="0 0 448 512">
+                        <path
+                            d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.6 66.4 14 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+            <li class="icon instagram">
+                <a href="https://www.instagram.com/landmensure/" target="_blank"
+                    style="color: inherit; text-decoration: none; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                    <span class="tooltip">Instagram</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" fill="currentColor" class="bi bi-instagram"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </footer>
+    <!-- Script de Sincronização do Tema Corrigido -->
+    <script>
+        const checkbox = document.getElementById('themeCheckbox');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (prefersDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            checkbox.checked = false;
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            checkbox.checked = true;
+        }
+
+        function toggleTheme() {
+            if (!checkbox.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        }
+    </script>
+
+    <!-- Bibliotecas Externas e Script Principal -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
+    <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
